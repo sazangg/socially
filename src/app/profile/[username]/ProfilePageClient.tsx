@@ -55,6 +55,7 @@ export default function ProfilePageClient({
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [isFollowing, setIsFollowing] = useState(initialIsFollowing);
   const [isUpdatingFollow, setIsUpdatingFollow] = useState(false);
+  const [followersCount, setFollowersCount] = useState(user._count.followers);
 
   const [editForm, setEditForm] = useState({
     name: user.name || "",
@@ -83,6 +84,7 @@ export default function ProfilePageClient({
       setIsUpdatingFollow(true);
       await toggleFollow(user.id);
       setIsFollowing((prev) => !prev);
+      setFollowersCount((prev) => (isFollowing ? prev - 1 : prev + 1));
     } catch (error) {
       console.log(error);
       toast.error("Failed to update follow status");
@@ -127,7 +129,7 @@ export default function ProfilePageClient({
                     <Separator orientation="vertical" />
                     <div>
                       <div className="font-semibold">
-                        {user._count.followers.toLocaleString()}
+                        {followersCount.toLocaleString()}
                       </div>
                       <div className="text-sm text-muted-foreground">
                         Followers
