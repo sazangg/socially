@@ -43,6 +43,7 @@ export default function NotificationsPage() {
         const unreadIds = data.filter((n) => !n.read).map((n) => n.id);
         if (unreadIds.length > 0) await markNotificationsAsRead(unreadIds);
       } catch (error) {
+        console.log(error);
         toast.error("Failed to fetch notifications");
       } finally {
         setIsLoading(false);

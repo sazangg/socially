@@ -22,6 +22,7 @@ import {
   SendIcon,
 } from "lucide-react";
 import { Textarea } from "./ui/textarea";
+import Image from "next/image";
 
 type Posts = Awaited<ReturnType<typeof getPosts>>;
 type Post = Posts[number];
@@ -52,6 +53,7 @@ export default function PostCard({
       setOptimisticLikes((prev) => prev + (hasLiked ? -1 : 1));
       await toggleLike(post.id);
     } catch (error) {
+      console.log(error);
       setOptimisticLikes(post._count.likes);
       setHasLiked(post.likes.some((like) => like.userId === dbUserId));
     } finally {
@@ -70,6 +72,7 @@ export default function PostCard({
         setNewComment("");
       }
     } catch (error) {
+      console.log(error);
       toast.error("Failed to add Comment");
     } finally {
       setIsCommenting(false);
@@ -88,6 +91,7 @@ export default function PostCard({
         throw new Error(result.error);
       }
     } catch (error) {
+      console.log(error);
       toast.error("Failed to delete post");
     } finally {
       setIsDeleting(false);
@@ -142,7 +146,7 @@ export default function PostCard({
           {/* POST IMAGE */}
           {post.image && (
             <div className="rounded-lg overflow-hidden">
-              <img
+              <Image
                 src={post.image}
                 alt="Post content"
                 className="w-full h-auto object-cover"
