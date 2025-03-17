@@ -150,6 +150,6 @@ export async function toggleFollow(targetUserId: string) {
     }
   } catch (error) {
     console.log("Error in toggleFollow:", error);
-    return { success: false, error };
+    return { success: false, error: "Error toggling follow" };
   }
 }
